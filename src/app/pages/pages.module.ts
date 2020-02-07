@@ -22,7 +22,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [PagesComponent],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
   ]
 })
 export class PagesModule {
