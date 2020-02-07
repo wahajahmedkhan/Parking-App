@@ -1,12 +1,32 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from "@angular/router";
+import {PagesComponent} from "./page.component";
+
+const routes: Routes = [
+
+  {
+    path: 'map',
+    loadChildren: () => import('./map/map.module').then(m => m.MapModule)
+  },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./feedback/feedback.module').then(m => m.FeedbackModule)
+  },
+  {
+    path: 'booking',
+    loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule)
+  },
+];
 
 
 @NgModule({
-  declarations: [],
+  declarations: [PagesComponent],
   imports: [
-    CommonModule
+    RouterModule.forRoot(routes),
   ]
 })
 export class PagesModule {
 }
+
+
+

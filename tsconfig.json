@@ -2,6 +2,29 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@auth/*": [
+        "src/app/auth/*"
+      ],
+      "@pages/*": [
+        "src/app/pages/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@model/*": [
+        "src/app/model/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@nodeMod/*": [
+        "node_modules/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
