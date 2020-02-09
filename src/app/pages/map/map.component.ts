@@ -97,10 +97,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.markers.forEach(item => {
-      item.removeEventListener();
-    })
+    this.markers = [];
   }
+
 
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement,
