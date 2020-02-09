@@ -1,4 +1,4 @@
-export class Booking {
+export interface Booking {
   bid: string;
   sid: string;
   aid: string;

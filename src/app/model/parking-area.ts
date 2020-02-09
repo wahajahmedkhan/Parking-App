@@ -1,4 +1,4 @@
-export class ParkingArea {
+export interface ParkingArea {
   pid: string;
   displayName: string;
   lat: string;
@@ -6,7 +6,7 @@ export class ParkingArea {
 }
 
 
-export class Slots {
+export interface Slots {
 
   sid: string;
   pid: string;

@@ -1,27 +1,44 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/internal/operators";
-import {AngularFirestore} from "@angular/fire/firestore";
+import {map} from 'rxjs/internal/operators';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {BookingModel} from '@model/booking.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingsService {
+  private bookingModel: BookingModel = null;
 
   constructor(private db: AngularFirestore) {
   }
 
+  get thisBookingModel() {
+    return this.bookingModel;
+  }
+
+  setBookingModel(bookingModel: BookingModel) {
+    this.bookingModel = bookingModel;
+    console.log('BookingService this.bookingModel', this.bookingModel);
+  }
+
   getBookings() {
     return new Promise<any>((resolve, reject) => {
-      this.db.collection('/bookings').snapshotChanges().pipe(map(items => {
-        const response = [];
-        items.forEach(item => {
-          response.push(item.payload.doc.data())
+      this.db
+        .collection('/bookings')
+        .snapshotChanges()
+        .pipe(
+          map((items) => {
+            const response = [];
+            items.forEach((item) => {
+              response.push(item.payload.doc.data());
+            });
+            return response;
+          }),
+        )
+        .subscribe((snapshots) => {
+          resolve(snapshots);
         });
-        return response;
-      })).subscribe(snapshots => {
-        resolve(snapshots)
-      })
-    })
+    });
   }
 
   createBooking(value) {
@@ -34,10 +51,16 @@ export class BookingsService {
   }
 
   updateBooking(bookingKey, value) {
-    return this.db.collection('bookings').doc(bookingKey).set(value);
+    return this.db
+      .collection('bookings')
+      .doc(bookingKey)
+      .set(value);
   }
 
   deleteUser(bookingKey) {
-    return this.db.collection('booking').doc(bookingKey).delete();
+    return this.db
+      .collection('bookings')
+      .doc(bookingKey)
+      .delete();
   }
 }

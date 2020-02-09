@@ -1,4 +1,4 @@
-export class Email {
+export interface Email {
   eid: string;
   to: string;
   from: string;
