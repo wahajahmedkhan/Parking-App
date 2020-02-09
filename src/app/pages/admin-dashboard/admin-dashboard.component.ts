@@ -1,5 +1,6 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {NgbdSortableHeader, SortEvent} from "@shared/sortable.directive";
+import {UsersService} from "@services/endpoints/users.service";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -15,12 +16,16 @@ export class AdminDashboardComponent implements OnInit {
 
   service = {};
 
+  users;
 
-  constructor() {
+
+  constructor(private UserService: UsersService) {
+
   }
 
 
   ngOnInit() {
+    this.users = this.UserService.getUsers();
   }
 
   onSort({column, direction}: SortEvent) {
