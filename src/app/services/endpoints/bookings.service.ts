@@ -23,4 +23,21 @@ export class BookingsService {
       })
     })
   }
+
+  createBooking(value) {
+    return this.db.collection('bookings').add({
+      name: value.name,
+      nameToSearch: value.name.toLowerCase(),
+      surname: value.surname,
+      age: parseInt(value.age),
+    });
+  }
+
+  updateBooking(bookingKey, value) {
+    return this.db.collection('users').doc(bookingKey).set(value);
+  }
+
+  deleteUser(bookingKey) {
+    return this.db.collection('users').doc(bookingKey).delete();
+  }
 }
