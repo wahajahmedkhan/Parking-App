@@ -11,7 +11,8 @@
             <div class="input-group ml-5">
               <label>Date</label>
               <input class="form-control ml-5" placeholder="yyyy-mm-dd"
-                     name="dp" [(ngModel)]="model" ngbDatepicker [footerTemplate]="footerTemplate" #d="ngbDatepicker">
+                     name="dp" [(ngModel)]="model.date" ngbDatepicker [footerTemplate]="footerTemplate"
+                     #d="ngbDatepicker">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
               </div>
@@ -37,7 +38,7 @@
           </div>
         </div>
         <div class="card-footer text-center">
-          <button type="submit" class="btn btn-info btn-fill btn-wd">Check</button>
+          <button type="submit" class="btn btn-info btn-fill btn-wd" (click)="searchSlots()">Check</button>
         </div>
       </div>
     </div>

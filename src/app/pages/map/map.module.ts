@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgbModalModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastService} from "@shared/toast/toast-service";
 import {ToastsContainer} from "@shared/toast/toasts-container";
+import {AreasService} from "@services/endpoints/areas.service";
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
     NgbModalModule,
     RouterModule.forChild(routes)
   ],
-  providers: [ToastService],
+  providers: [ToastService, AreasService],
 })
 export class MapModule {
 }

@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ToastService} from "@shared/toast/toast-service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AreasService} from "@services/endpoints/areas.service";
+import {Observable} from "rxjs/index";
 
 @Component({
   selector: 'app-map',
@@ -26,75 +28,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     zoom: 12,
   };
 
-  places = [
-    {
-      pid: 1,
-      name: 'Bahadurabad',
-      description: 'Parking Around the Charminar',
-      lat: '24.8823',
-      long: '67.0673',
-    },
-    {
-      pid: 2,
-      name: 'Dolmen mall clifton',
-      description: 'Parking Outside the Mall',
-      lat: '24.802505',
-      long: '67.029456'
-    },
-    {
-      pid: 3,
-      name: 'Burns Road',
-      description: 'Parking around the famous food street',
-      lat: '24.8554',
-      long: '67.0174'
-    }
-  ];
 
-  slots = [
-    {
-      sid: 1,
-      pid: 1,
-      name: 'slot 1',
-      lat: '24.8823',
-      long: '67.0673',
-      available: true
-
-    },
-    {
-      sid: 2,
-      pid: 1,
-      name: 'slot 2',
-      lat: '24.8817',
-      long: '67.0667',
-    },
-    {
-      sid: 3,
-      pid: 1,
-      name: 'slot 3',
-      lat: '24.8829',
-      long: '67.0679',
-    },
-    {
-      sid: 4,
-      pid: 2,
-      name: 'slot 1',
-      lat: '24.802505',
-      long: '67.029456'
-    },
-    {
-      sid: 5,
-      pid: 3,
-      name: 'slot 1',
-      lat: '24.8554',
-      long: '67.0174'
-    }
-  ];
+  places: Observable<any>;
+  slots = [];
 
 
-  constructor(private notification: ToastService, private modalService: NgbModal) {
+  constructor(private notification: ToastService, private modalService: NgbModal, private areaService: AreasService) {
+
   }
 
   ngOnInit() {
+    this.places = this.areaService.getParkingAraes();
+
   }
 
 
@@ -109,23 +54,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.slots.forEach(item => {
       this.placeMarker(item);
     })
-
   }
 
   ngAfterViewInit() {
-    this.mapInitializer()
+    this.areaService.getParkingSlots().then((res) => {
+      this.slots = res;
+      this.mapInitializer();
+    })
   }
 
   open() {
     this.modalService.open(this.modal);
   }
   placeMarker(location) {
-
-
     const color = location.available ? 'green' : 'red';
 
     const marker = new google.maps.Marker({
-      position: {lat: Number(location.lat), lng: Number(location.long)},
+      position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)},
       map: this.map,
       title: location.name,
       icon: {
@@ -143,7 +88,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   viewArea(area) {
     this.map.setZoom(13);
     setTimeout(() => {
-      const point = new google.maps.LatLng(area.lat, area.long);
+      const point = new google.maps.LatLng(area.location.latitude, area.location.longitude);
       this.map.panTo(point);
       setTimeout(() => {
         this.map.setZoom(16)
@@ -157,13 +102,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   markerClicked(event) {
+    console.log(event.latLng.toJSON());
+    event = event.latLng.toJSON();
     const location: any = this.slots.find(x => {
-      if (x.lat === String(event.latLng.lat()) && x.long === String(event.latLng.lng())) {
+      if (x.lat == event.lat && x.lng == event.lng) {
         return true;
       }
     });
     if (location.available) {
-      console.log(location);
       this.open();
 
     } else {

@@ -33,4 +33,9 @@ export class BookingComponent implements OnInit {
     });
 
   }
+
+  searchSlots() {
+
+    console.log(this.model)
+  }
 }

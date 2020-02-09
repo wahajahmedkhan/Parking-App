@@ -1,6 +1,6 @@
 export class Booking {
   bid: string;
   sid: string;
-  uid: string;
+  aid: string;
   date: string;
 }

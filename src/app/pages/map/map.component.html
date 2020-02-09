@@ -1,6 +1,6 @@
 <div class="row offset-md-1">
   <div class="col-sm-12 col-md-3">
-    <div class="card" *ngFor="let area of places">
+    <div class="card" *ngFor="let area of places | async">
       <div class="card-body">
         <h5 class="card-title">{{area.name}}</h5>
         <p class="card-text">{{area.description}}</p>
