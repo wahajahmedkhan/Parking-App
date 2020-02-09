@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ToastService} from "@shared/toast/toast-service";
 
 @Component({
@@ -6,12 +6,12 @@ import {ToastService} from "@shared/toast/toast-service";
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('mapContainer', {static: false}) gmap: ElementRef;
   @ViewChild('dangerTpl', {static: false}) danger;
 
-  marker = [];
+  markers = [];
   map: google.maps.Map;
 
   lat = 24.8547;
@@ -95,6 +95,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+
+  ngOnDestroy() {
+    this.markers.forEach(item => {
+      item.removeEventListener();
+    })
+  }
+
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement,
       this.mapOptions);
@@ -124,7 +131,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     marker.setMap(this.map);
 
-    this.marker.push(marker.addListener('click', (e) => {
+    this.markers.push(marker.addListener('click', (e) => {
       this.markerClicked(e);
     }));
   }
