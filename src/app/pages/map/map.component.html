@@ -1,24 +1,10 @@
 <div class="row offset-md-1">
   <div class="col-sm-12 col-md-3">
-    <div class="card">
+    <div class="card" *ngFor="let area of places">
       <div class="card-body">
-        <h5 class="card-title">Bahadurabad</h5>
-        <p class="card-text">Parking Around the Charminar</p>
-        <a href="#" class="btn btn-primary">Check</a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Dolmen mall clifton</h5>
-        <p class="card-text">Parking Outside the Mall</p>
-        <a href="#" class="btn btn-primary">Check</a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Burns Road</h5>
-        <p class="card-text">Parking around the famous food street</p>
-        <a href="#" class="btn btn-primary">Check</a>
+        <h5 class="card-title">{{area.name}}</h5>
+        <p class="card-text">{{area.description}}</p>
+        <button (click)="viewArea(area)" class="btn btn-primary">Check</button>
       </div>
     </div>
   </div>
