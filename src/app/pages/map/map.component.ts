@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ToastService} from "@shared/toast/toast-service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-map',
@@ -10,6 +11,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('mapContainer', {static: false}) gmap: ElementRef;
   @ViewChild('dangerTpl', {static: false}) danger;
+  @ViewChild('content', {static: false}) modal;
 
   markers = [];
   map: google.maps.Map;
@@ -89,7 +91,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
 
-  constructor(private notification: ToastService) {
+  constructor(private notification: ToastService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -114,6 +116,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapInitializer()
   }
 
+  open() {
+    this.modalService.open(this.modal);
+  }
   placeMarker(location) {
 
 
@@ -159,6 +164,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     if (location.available) {
       console.log(location);
+      this.open();
 
     } else {
       console.log('danger');
