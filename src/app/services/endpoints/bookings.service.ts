@@ -12,7 +12,7 @@ export class BookingsService {
 
   getBookings() {
     return new Promise<any>((resolve, reject) => {
-      this.db.collection('/bookings').snapshotChanges().pipe(map(items => {
+      this.db.collection('/booking').snapshotChanges().pipe(map(items => {
         const response = [];
         items.forEach(item => {
           response.push(item.payload.doc.data())
@@ -25,7 +25,7 @@ export class BookingsService {
   }
 
   createBooking(value) {
-    return this.db.collection('bookings').add({
+    return this.db.collection('booking').add({
       name: value.name,
       nameToSearch: value.name.toLowerCase(),
       surname: value.surname,
@@ -34,10 +34,10 @@ export class BookingsService {
   }
 
   updateBooking(bookingKey, value) {
-    return this.db.collection('users').doc(bookingKey).set(value);
+    return this.db.collection('booking').doc(bookingKey).set(value);
   }
 
   deleteUser(bookingKey) {
-    return this.db.collection('users').doc(bookingKey).delete();
+    return this.db.collection('booking').doc(bookingKey).delete();
   }
 }

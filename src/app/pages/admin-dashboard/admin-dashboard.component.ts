@@ -1,6 +1,7 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {NgbdSortableHeader, SortEvent} from "@shared/sortable.directive";
+import {Component, OnInit} from '@angular/core';
 import {UsersService} from "@services/endpoints/users.service";
+import {BookingsService} from "@services/endpoints/bookings.service";
+import {FeedbackService} from "@services/endpoints/feedback.service";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -9,7 +10,7 @@ import {UsersService} from "@services/endpoints/users.service";
 })
 export class AdminDashboardComponent implements OnInit {
 
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  // @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
 
   active = 1;
@@ -18,24 +19,42 @@ export class AdminDashboardComponent implements OnInit {
 
   users;
 
+  bookings;
 
-  constructor(private UserService: UsersService) {
+  feedBacks;
+
+
+  constructor(private UserService: UsersService,
+              private bookingService: BookingsService,
+              private feedBackService: FeedbackService) {
 
   }
 
 
   ngOnInit() {
     this.users = this.UserService.getUsers();
+    this.bookings = this.bookingService.getBookings().then((res) => console.log('ddwww', res));
+    this.feedBacks = this.feedBackService.getFeedBacks();
   }
 
-  onSort({column, direction}: SortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
+  // onSort({column, direction}: SortEvent) {
+  //   // resetting other headers
+  //   this.headers.forEach(header => {
+  //     if (header.sortable !== column) {
+  //       header.direction = '';
+  //     }
+  //   });
 
-  }
+
+  // this.users = this.UserService.getUsers().then((res) => {
+  //   if (direction === '') {
+  //
+  //   } else {
+  //     res = [...User].sort((a, b) => {
+  //       const res = compare(a[column], b[column]);
+  //       return direction === 'asc' ? res : -res;
+  //     });
+  //   }
+  // });
 
 }

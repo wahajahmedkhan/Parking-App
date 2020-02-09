@@ -5,6 +5,8 @@ import {AdminDashboardComponent} from "./admin-dashboard.component";
 import {NgbNavModule, NgbPaginationModule, NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {UsersService} from "@services/endpoints/users.service";
+import {FeedbackService} from "@services/endpoints/feedback.service";
+import {BookingsService} from "@services/endpoints/bookings.service";
 
 
 const routes: Routes = [
@@ -26,7 +28,11 @@ const routes: Routes = [
     NgbTypeaheadModule,
     RouterModule.forChild(routes)
   ],
-  providers: [UsersService]
+  providers: [
+    UsersService,
+    FeedbackService,
+    BookingsService,
+  ]
 })
 export class AdminDashboardModule {
 }
