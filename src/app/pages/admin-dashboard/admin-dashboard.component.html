@@ -5,41 +5,152 @@
       <li [ngbNavItem]="1">
         <a ngbNavLink>Users</a>
         <ng-template ngbNavContent>
-          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
-            synth
-            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
-            keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
-            salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+          <div class="card-body table-full-width table-responsive">
+            <form>
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+                  <th scope="col" sortable="area" (sort)="onSort($event)">picture</th>
+                  <th scope="col" sortable="population" (sort)="onSort($event)">email</th>
+                  <th scope="col">Admin</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let country of countries$ | async">
+                  <th scope="row">{{ country.id }}</th>
+                  <td>
+                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                         style="width: 20px">
+                    <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                  <option [ngValue]="2">2 items per page</option>
+                  <option [ngValue]="4">4 items per page</option>
+                  <option [ngValue]="6">6 items per page</option>
+                </select>
+              </div>
+
+            </form>
+          </div>
+
         </ng-template>
       </li>
       <li [ngbNavItem]="2">
         <a ngbNavLink>Bookings</a>
         <ng-template ngbNavContent>
-          <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
-            farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean
-            shorts
-            ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
-            helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-            anderson
-            8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-            stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+          <div class="card-body table-full-width table-responsive">
+            <form>
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" sortable="name" (sort)="onSort($event)">Area</th>
+                  <th scope="col" sortable="area" (sort)="onSort($event)">Slot</th>
+                  <th scope="col" sortable="population" (sort)="onSort($event)">Start Time</th>
+                  <th scope="col" sortable="population" (sort)="onSort($event)">End Time</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let country of countries$ | async">
+                  <th scope="row">{{ country.id }}</th>
+                  <td>
+                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                         style="width: 20px">
+                    <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                  <option [ngValue]="2">2 items per page</option>
+                  <option [ngValue]="4">4 items per page</option>
+                  <option [ngValue]="6">6 items per page</option>
+                </select>
+              </div>
+
+            </form>
+          </div>
         </ng-template>
       </li>
       <li [ngbNavItem]="3">
         <a ngbNavLink>Feedbacks</a>
         <ng-template ngbNavContent>
-          <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla
-            facilisi.
-            Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et
-            odio.
-            Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam
-            urna,
-            egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim,
-            nec
-            tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus
-            et
-            magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-            neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+          <div class="card-body table-full-width table-responsive">
+            <form>
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" sortable="name" (sort)="onSort($event)">User</th>
+                  <th scope="col" sortable="area" (sort)="onSort($event)">Feed Back</th>
+                  <th scope="col" sortable="population" (sort)="onSort($event)">reply</th>
+                  <th scope="col" sortable="population" (sort)="onSort($event)">Action</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let country of countries$ | async">
+                  <th scope="row">{{ country.id }}</th>
+                  <td>
+                    <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                         style="width: 20px">
+                    <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                  <option [ngValue]="2">2 items per page</option>
+                  <option [ngValue]="4">4 items per page</option>
+                  <option [ngValue]="6">6 items per page</option>
+                </select>
+              </div>
+
+            </form>
+          </div>
         </ng-template>
       </li>
     </ul>

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {NgbdSortableHeader, SortEvent} from "@shared/sortable.directive";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,12 +8,29 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+
   active = 1;
+
+  service = {};
+
 
   constructor() {
   }
 
+
   ngOnInit() {
+  }
+
+  onSort({column, direction}: SortEvent) {
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
   }
 
 }
