@@ -2,5 +2,15 @@ export class ParkingArea {
   pid: string;
   displayName: string;
   lat: string;
-  long: boolean;
+  lng: string;
+}
+
+
+export class Slots {
+
+  sid: string;
+  pid: string;
+  name: string;
+  lat: string;
+  long: string
 }

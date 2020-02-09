@@ -2,6 +2,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MapComponent} from './map.component';
 import {RouterModule, Routes} from "@angular/router";
+import {NgbModalModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap";
+import {ToastService} from "@shared/toast/toast-service";
+import {ToastsContainer} from "@shared/toast/toasts-container";
 
 
 const routes: Routes = [
@@ -14,11 +17,14 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [MapComponent],
+  declarations: [MapComponent, ToastsContainer],
   imports: [
     CommonModule,
+    NgbToastModule,
+    NgbModalModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [ToastService],
 })
 export class MapModule {
 }

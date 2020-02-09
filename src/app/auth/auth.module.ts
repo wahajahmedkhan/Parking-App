@@ -4,9 +4,9 @@ import {SignInComponent} from "./sign-in/sign-in.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {AdminLoginComponent} from "./admin-login/admin-login.component";
 import {RouterModule, Routes} from "@angular/router";
-import {SharedModule} from "@shared/shared.module";
 import {ForgotPasswordComponent} from "@auth/forgot-password/forgot-password.component";
 import {VerifyEmailComponent} from "@auth/verify-email/verify-email.component";
+import {CommonModule} from "@angular/common";
 
 const routes: Routes = [
   {path: '', redirectTo: 'sign-in', pathMatch: 'full'},
@@ -27,8 +27,8 @@ const routes: Routes = [
     VerifyEmailComponent
   ],
   imports: [
-    RouterModule.forChild(routes),
-    SharedModule
+    CommonModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class AuthModule {
