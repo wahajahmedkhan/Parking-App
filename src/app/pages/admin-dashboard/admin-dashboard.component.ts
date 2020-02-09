@@ -33,7 +33,7 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.users = this.UserService.getUsers();
-    this.bookings = this.bookingService.getBookings();
+    this.bookings = this.bookingService.getBookings().then((res) => console.log(res));
     this.feedBacks = this.feedBackService.getFeedBacks();
   }
 
