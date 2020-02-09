@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 * {
   -webkit-box-sizing: border-box;
@@ -274,6 +275,7 @@ input {
   padding: 1.5rem 1rem;
   border-bottom: 1px solid #dde0e2;
   cursor: pointer;
+
 }
 
 .sidebar {
@@ -285,7 +287,7 @@ input {
 
 a:not([href]):not([tabindex]) {
   &:focus, &:hover {
-    color: #E91E63;
+    color: #ffffff;
     background: #efefef;
   }
 }
@@ -341,7 +343,7 @@ a:not([href]):not([tabindex]) {
 }
 
 .bg-dark {
-  background-color: #3F51B5 !important;
+  background-color: #001f3f !important;
 }
 
 .gap-right {
@@ -562,113 +564,3 @@ body .table thead th {
 }
 
 /* Responsive */
-@media (max-width: 767px) {
-  .sidebar {
-    position: static;
-    padding: 40px 0 10px;
-    height: auto;
-  }
-
-  [role="main"] {
-    padding-top: 0;
-  }
-
-  .inner-adjust {
-    padding: 0;
-  }
-
-  ul.nav.flex-column {
-    flex-direction: inherit !important;
-  }
-
-  .pt-3, .py-3 {
-    padding-top: 1.5rem !important;
-  }
-
-  .brand-logo {
-    max-width: 175px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .dasboard-text {
-    display: none !important;
-  }
-
-  .sidebar-sticky {
-    padding-top: 1.9rem !important;
-    height: auto;
-
-    .nav li {
-      width: 50%;
-      text-align: center;
-      border-right: 1px solid #c7ceff;
-
-      &:last-child {
-        border: none;
-      }
-    }
-  }
-
-  .no-data img {
-    max-width: 100%;
-    margin-top: 0;
-  }
-
-  .nodata-msg, .h2, h2 {
-    font-size: 1.4rem;
-  }
-
-  .custom-text {
-    font-size: 14px;
-  }
-
-  .navbar-nav {
-    float: right;
-    width: 50%;
-    text-align: right;
-    display: inherit;
-    margin: 0;
-  }
-
-  .navbar-dark .navbar-brand {
-    margin: 0;
-    width: 50%;
-    float: left;
-    display: inherit;
-  }
-
-  .sidebar {
-    padding: 40px 0 0;
-  }
-
-  footer br {
-    display: none;
-  }
-
-  .media {
-    display: block;
-  }
-
-  .rounded-circle {
-    max-width: 150px;
-    margin: 0 auto 20px !important;
-    display: block;
-  }
-
-  b, strong {
-    display: block;
-  }
-
-  .displayTable {
-    background: white;
-  }
-
-  .authBlock {
-    box-shadow: none;
-  }
-
-  .px-logo {
-    display: none;
-  }
-}

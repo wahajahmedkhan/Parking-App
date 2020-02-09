@@ -1,10 +1,14 @@
 import {Component} from '@angular/core';
+import {AuthService} from "@services/common/auth.service";
 
 @Component({
   selector: 'app-page',
-  template: `
-    <router-outlet></router-outlet>`
+  templateUrl: './page.component.html',
 })
 export class PagesComponent {
+
+  constructor(public auth: AuthService) {
+
+  }
 
 }
