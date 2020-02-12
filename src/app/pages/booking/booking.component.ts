@@ -1,6 +1,5 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
-import {NgbdSortableHeader, SortEvent} from '@shared/sortable.directive';
 import {BookingModel} from '@model/booking.model';
 import {getDate, getMonth, getYear} from 'date-fns';
 import {NgForm} from '@nodeMod/@angular/forms';
@@ -13,7 +12,6 @@ import {BookingsService} from '@services/endpoints/bookings.service';
   styleUrls: ['./booking.component.scss'],
 })
 export class BookingComponent implements OnInit {
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   @ViewChild('bookingForm', {static: false}) bookingForm: NgForm;
 
@@ -34,15 +32,6 @@ export class BookingComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  onSort({column, direction}: SortEvent) {
-    // resetting other headers
-    this.headers.forEach((header) => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
   }
 
   onSubmit() {

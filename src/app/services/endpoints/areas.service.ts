@@ -20,6 +20,12 @@ export class AreasService {
         });
   }
 
+  getParkingSlotsId() {
+    return new Promise<any>((resolve, reject) => {
+      resolve(this.db.collection('/slots').get());
+    });
+  }
+
 }
 
 

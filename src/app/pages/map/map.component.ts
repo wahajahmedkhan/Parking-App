@@ -4,6 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AreasService} from '@services/endpoints/areas.service';
 import {BookingsService} from '@services/endpoints/bookings.service';
 import {Observable, Subscription} from 'rxjs';
+import {getTime} from "date-fns";
 
 @Component({
   selector: 'app-map',
@@ -32,6 +33,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   slots = [];
   booking = [];
 
+  slotsId = [];
+
+
   bookingTime;
 
   slotSubscription: Subscription;
@@ -55,8 +59,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.markers = [];
-    this.slotSubscription.unsubscribe();
-    this.bookSubscription.unsubscribe();
+    // this.slotSubscription.unsubscribe();
+    // this.bookSubscription.unsubscribe();
   }
 
   mapInitializer() {
@@ -68,33 +72,63 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
 
+    this.areaService.getParkingSlots().then(res => {
+      this.slotSubscription = res.subscribe(slots => {
+        this.slots = slots;
+        this.mapInitializer();
+      });
+    });
+
     return new Promise<any>((resolve, reject) => {
       resolve({
-        area: this.areaService.getParkingSlots(),
+        area: this.areaService.getParkingSlotsId(),
         booker: this.bookingsService.getBookings()
       });
-    }).then((object) => {
-      object.booker.then(booker => {
-        this.bookSubscription = booker.subscribe(booking => {
-          this.booking = booking;
-          object.area.then(area => {
-            this.slotSubscription = area.subscribe(slots => {
-              this.slots = slots;
-              this.mapInitializer();
-            });
-          });
-        });
-      });
+    }).then(object => {
+      object.area.then((res) => {
+        res.subscribe(wl => {
+          this.slotsId = wl.docs;
 
-    });
+          object.booker.then(res => {
+            res.subscribe((wl) => {
+              this.booking = wl;
+              let f = this.bookingsService.thisBookingModel;
+              let dateTime;
+              if (f === null) {
+                dateTime = getTime(new Date());
+              } else {
+                console.log(f.date.getFullYear());
+                dateTime = getTime(new Date(f.date.getFullYear()))
+              }
+
+              console.log(dateTime);
+
+              this.booking.forEach(item => {
+                if (item.startDate >= dateTime && item.endDate <= dateTime) {
+                  console.log(item);
+                }
+              })
+
+
+            })
+          })
+
+        })
+      });
+    })
+
+
   }
+
+
+  // });
 
   open() {
     this.modalService.open(this.modal);
   }
 
   placeMarker(location) {
-    console.log(location, this.booking);
+    // console.log(location, this.booking);
     const color = location.available ? 'green' : 'red';
 
     const marker = new google.maps.Marker({
@@ -133,11 +167,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(event.latLng.toJSON());
     event = event.latLng.toJSON();
     const location: any = this.slots.find((x) => {
-      if (x.lat === event.lat && x.lng === event.lng) {
+      if (x.lat === String(event.lat) && x.lng === String(event.lng)) {
         return true;
       }
     });
-    if (location.available) {
+    if (location.available === true) {
       this.open();
     } else {
       console.log('danger');
