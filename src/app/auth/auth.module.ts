@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {AuthComponent} from './auth.component';
-import {SignInComponent} from "./sign-in/sign-in.component";
-import {SignUpComponent} from "./sign-up/sign-up.component";
-import {AdminLoginComponent} from "./admin-login/admin-login.component";
-import {RouterModule, Routes} from "@angular/router";
-import {ForgotPasswordComponent} from "@auth/forgot-password/forgot-password.component";
-import {VerifyEmailComponent} from "@auth/verify-email/verify-email.component";
-import {CommonModule} from "@angular/common";
+import {SignInComponent} from './sign-in/sign-in.component';
+import {SignUpComponent} from './sign-up/sign-up.component';
+import {AdminLoginComponent} from './admin-login/admin-login.component';
+import {RouterModule, Routes} from '@angular/router';
+import {ForgotPasswordComponent} from '@auth/forgot-password/forgot-password.component';
+import {VerifyEmailComponent} from '@auth/verify-email/verify-email.component';
+import {CommonModule} from '@angular/common';
 
 const routes: Routes = [
   {path: '', redirectTo: 'sign-in', pathMatch: 'full'},

@@ -1,14 +1,14 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {RouterModule, Routes} from "@angular/router";
-import {NgHttpLoaderModule} from "ng-http-loader";
-import {AngularFireModule} from "@angular/fire";
-import {CoreModule} from "./core/core.module";
-import {environment} from "@environments/environment";
-import {SecureInnerPagesGuard} from "./core/guard/secure-inner-pages.guard";
-import {AuthGuard} from "./core/guard/auth.guard";
-import {HttpClientModule} from "@angular/common/http";
+import {RouterModule, Routes} from '@angular/router';
+import {NgHttpLoaderModule} from 'ng-http-loader';
+import {AngularFireModule} from '@angular/fire';
+import {CoreModule} from './core/core.module';
+import {environment} from '@environments/environment';
+import {SecureInnerPagesGuard} from './core/guard/secure-inner-pages.guard';
+import {AuthGuard} from './core/guard/auth.guard';
+import {HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
 
