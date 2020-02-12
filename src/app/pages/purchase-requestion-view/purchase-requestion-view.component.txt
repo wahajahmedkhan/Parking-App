@@ -1,0 +1,226 @@
+// import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+// import { NzNotificationService } from 'ng-zorro-antd';
+// import { ApiService } from '@services/common/apiService';
+// import { ActionCellRendererComponent } from '@CompCop/action-btn/action.component';
+// import { Router, ActivatedRoute } from '@angular/router';
+// import { AgGridService } from '@services/common/ag-grid-service.service';
+// import * as moment from 'moment';
+// import { PurchaseRequisitionNumberService } from '@services/common/purchase.service';
+// import { TabHeadingDirective } from 'ngx-bootstrap';
+//
+// @Component({
+// 	selector: 'app-purchase-requestion-view',
+// 	templateUrl: './purchase-requestion-view.component.html',
+// 	styleUrls: ['./purchase-requestion-view.component.css'],
+// })
+// export class PurchaseRequestionViewComponent implements OnInit, AfterViewInit {
+// 	@ViewChild('modal', { static: false }) deleteModal;
+// 	@ViewChild('rangePicker', { static: false }) rangePicker;
+//
+// 	// grid Api ---------------------------------------
+//
+// 	// ag-Grid componet and Module import -----------
+// 	// modules = AllModules;
+//
+// 	// ag-Grid config -------------------------
+// 	columnDefs;
+// 	defaultColDef;
+// 	rowData;
+// 	private frameworkComponents;
+// 	private sortingOrder;
+// 	check: any[];
+// 	disableDeleteButton: boolean;
+//
+// 	constructor(
+// 		private apiService: ApiService,
+// 		private notification: NzNotificationService,
+// 		private router: Router,
+// 		private route: ActivatedRoute,
+// 		private purchaseService: PurchaseRequisitionNumberService,
+// 		public agGridService: AgGridService,
+// 	) {
+// 		// this.getAllSupplier();
+// 		// this.getAllWarehouse();
+// 		this.agGridService.getAllSupplier();
+// 		this.agGridService.getAllWarehouse();
+// 		this.agGridService.getAllUser();
+// 		// Custom Component in ag-Grid ---------------
+// 		this.frameworkComponents = {
+// 			actionCellRendererComponent: ActionCellRendererComponent,
+// 		};
+//
+// 		// Configuration of the table and sidebar ---------------
+// 		this.defaultColDef = {
+// 			resizable: true,
+// 			sortable: true,
+// 		};
+//
+// 		// Table headers of the table and sidebar ---------------
+// 		this.columnDefs = [
+// 			{
+// 				headerName: 'SNo.',
+// 				field: 'sno',
+// 				minWidth: 50,
+// 				cellRenderer: (obj) => {
+// 					return obj.rowIndex + 1;
+// 				},
+// 			},
+//
+// 			{
+// 				headerName: 'Action',
+// 				field: 'action',
+// 				minWidth: 200,
+// 				headerCheckboxSelection: true,
+// 				checkboxSelection: true,
+// 				cellRendererFramework: ActionCellRendererComponent,
+// 				cellRendererParams: {
+// 					onDelete: this.deleteAlert.bind(this),
+// 					onEdit: this.editRow.bind(this),
+// 					onGenerate: this.generateNext.bind(this),
+// 				},
+// 				cellStyle: { overflow: 'visible' },
+// 			},
+// 			{
+// 				headerName: 'PR#',
+// 				field: 'documentNumber',
+// 				minWidth: 150,
+// 				filter: true,
+// 			},
+// 			{
+// 				headerName: 'Date',
+// 				field: 'date',
+// 				minWidth: 120,
+// 				filter: true,
+// 				valueFormatter(params) {
+// 					return moment(params.value).format('DD MMM YYYY');
+// 				},
+// 			},
+// 			{
+// 				headerName: 'Supplier Name',
+// 				field: 'supplierName',
+// 				filter: true,
+// 				minWidth: 100,
+// 			},
+// 			{
+// 				headerName: 'Warehouse',
+// 				filter: true,
+// 				field: 'warehouseName',
+// 				minWidth: 100,
+// 			},
+// 			{
+// 				headerName: 'Expected Shipment Date',
+// 				filter: true,
+// 				minWidth: 100,
+// 				field: 'expectedShipmentDate',
+// 				valueFormatter(params) {
+// 					return moment(params.value).format('DD MMM YYYY');
+// 				},
+// 			},
+// 			{
+// 				headerName: 'Requisitor Name',
+// 				field: 'requisitionName',
+// 				filter: true,
+// 				minWidth: 100,
+// 				maxWidth: 140,
+// 			},
+// 			{
+// 				headerName: 'Status',
+// 				field: 'status',
+// 				filter: true,
+// 				minWidth: 50,
+// 				cellStyle(params: { value: any }) {
+// 					return params.value === 'Pending'
+// 						? {
+// 								backgroundColor: '#ff6262',
+// 								color: 'white',
+// 								fontWeight: 'bold',
+// 								textAlign: 'center',
+// 						  }
+// 						: {
+// 								backgroundColor: '#5cb85c',
+// 								color: 'white',
+// 								fontWeight: 'bold',
+// 								textAlign: 'center',
+// 						  };
+// 				},
+// 			},
+// 		];
+//
+// 	}
+//
+// 	ngAfterViewInit(): void {}
+//
+// 	ngOnInit() {
+// 		setTimeout(() => {
+// 			this.apiService.purchase.getAllPurchaseRequistion().subscribe((res: any) => {
+// 				this.rowData = this.updateRows(res.data).reverse();
+//
+// 				this.rowData.forEach((x) =>
+// 					{
+// 						x.status !== 'Pending' ? x.status = 'Proceed' : x.status;
+// 					}
+// 				);
+// 			});
+// 		}, 2000);
+//
+// 	}
+//
+// 	onRemoveSelected() {
+// 		const selectedData = this.agGridService.onRemoveSelected();
+// 		console.log("selectedData onRemoveSelected: ", selectedData);
+//
+// 		// this.DeleteData(selectedData);
+// 	}
+//
+// 	editRow(obj) {
+// 		this.router.navigate(['main/inventory/inventory-purchase/purchase-requestion', obj.rowData.id]);
+// 	}
+//
+// 	generateNext(obj) {
+// 		console.log('Object of purchase requisition row: ', obj.rowData);
+// 		this.purchaseService.navigateFromRequisitionToQuotation(obj.rowData.id);
+// 	}
+//
+// 	deleteAlert(obj) {
+// 		if(obj.rowData.status === "Proceed"){
+// 			this.notification.create('error', 'Error', 'This Requisistion has a quotation generated');
+// 			return;
+//
+// 		}
+// 		this.deleteModal.ShowModal(obj.rowData.status === "Pending");
+// 	}
+//
+// 	DeleteData(selectedRows) {
+// 		console.log('selectedRows: ', selectedRows);
+// 		if (selectedRows.length !== undefined && selectedRows.length > 0 ) {
+//
+// 				for (let i = 0; i < selectedRows.length; i++) {
+// 					console.log('selectedRows: ', i);
+//
+// 					this.apiService.purchase.deletePurchaseRequistion(selectedRows[i].id).subscribe(
+// 						(res) => {
+// 							this.notification.create('success', 'Deleted', 'Successfully Deleted');
+// 						},
+// 						(err: any) => {
+// 							this.notification.create('error', 'Error', `${err.meta.message}`);
+// 						},
+// 					);
+// 				}
+// 			} else {
+// 				// Its getting a direct ID so we can simply use that.
+// 				this.onRemoveSelected();
+// 			}
+//
+//
+// 	}
+//
+// 	filterDate(date) {
+// 		console.log(date);
+// 	}
+//
+// 	updateRows(data) {
+// 		console.log(this.agGridService.updateData(data));
+//
+// 		return this.agGridService.updateData(data);
+// 	}
+// }

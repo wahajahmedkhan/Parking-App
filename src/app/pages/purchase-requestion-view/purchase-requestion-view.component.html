@@ -1,0 +1,112 @@
+<div class="container content-width-100">
+  <div class="row  align-items-center justify-content-between">
+    <div class="col-11 col-sm-12 page-title">
+      <img style="float: left; padding-right: 15px;" height="60" src="assets/img/purchase.png"/>
+      <h3>Purchase Requisition</h3>
+      <p>Edit View and Delete</p>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-info MousePointer"
+              [routerLink]="['/main/inventory/inventory-purchase/purchase-requestion']">
+        <i class="fa fa-plus-square"></i>Add New
+      </button>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-sm-16">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-4">
+              <h6 class="pull-left mr-m-2 font-weight-bold">
+                Manage Purchase Requisition
+              </h6>
+
+              <select (change)="agGridService.onPageSizeChanged($event.target.value)" id="page-size">
+                <option value="10" selected="">10</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="1000000">Show All</option>
+              </select>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="col-16">
+                <div class="input-daterange form-inline pull-right" id="destination">
+                  <label style="color: black;">
+                    Choose Range &nbsp;
+                    <i class="fa fa-calendar"></i> &nbsp;</label
+                  >
+                  <input class="form-control CalenderWidth" (change)="filterDate($event)" bsDaterangepicker
+                         type="text"/>
+                  <div class="input-group sm-form form-sm form-1 pl-0">
+                    <div class="input-group-prepend">
+											<span class="input-group-text purple lighten-3" id="basic-text1"
+                      ><i class="fas fa-search text-white" aria-hidden="true"></i
+                      ></span>
+                    </div>
+                    <input
+                      class="form-control my-0 py-1"
+                      (input)="agGridService.onQuickFilterChanged()"
+                      id="quickFilter"
+                      type="text"
+                      placeholder="Filter data"
+                      aria-label="Search"
+                    />
+                  </div>
+                  <button
+                    *ngIf="agGridService.selected"
+                    class="btn-sm buttons-print btn btn-outline-danger"
+                    (click)="onRemoveSelected()"
+                  >
+                    Delete
+                    <i class="fa fa-trash-o" aria-hidden="true" style="color:red"></i>
+                  </button>
+                  <!-- <button
+                                        (click)="agGridService.onBtPrint()"
+                                        class="btn-sm
+                                                 buttons-print btn btn-outline-danger"
+                                    >
+                                        Print <i class="fa fa-print"></i>
+                                    </button> -->
+                  <button (click)="agGridService.onBtnExport()" class=" btn-sm buttons-print btn btn-outline-warning">
+                    Excel <i class="fa fa-print"></i>
+                  </button>
+                  <button type="button" class="btn-sm btn btn-outline-primary" (click)="agGridService.clearFilter()">
+                    Reset
+                    <i class="fa fa-refresh"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <ag-grid-angular
+              #agGrid
+              id="myGrid"
+              style="width: auto; height: 500px;"
+              class="ag-theme-balham"
+              [rowData]="rowData"
+              [domLayout]="domLayout"
+              rowSelection="multiple"
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef"
+              [animateRows]="true"
+              [floatingFilter]="true"
+              [pagination]="true"
+              (gridReady)="agGridService.onGridReady($event)"
+              (rowSelected)="agGridService.onRowSelected($event)"
+              (selectionChanged)="agGridService.onSelectionChanged($event)"
+            >
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-delete-modal #modal (IsDelete)="DeleteData($event)"></app-delete-modal>

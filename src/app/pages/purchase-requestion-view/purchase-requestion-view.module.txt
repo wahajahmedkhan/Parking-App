@@ -1,0 +1,16 @@
+// import { NgModule } from '@angular/core';
+// import { PurchaseRequestionViewComponent } from './purchase-requestion-view.component';
+// import { PurchaseRequestionViewRoutingModule } from './purchase-requestion-view.routing';
+// import { SharedModule } from 'src/app/shared/shared.module';
+// import { ActionBtnModule } from '@CompCop/action-btn/action-btn.module';
+// import { AgGridModule } from 'ag-grid-angular';
+// import { ActionCellRendererComponent } from '@CompCop/action-btn/action.component';
+// import { BsDropdownModule } from 'ngx-bootstrap';
+//
+// @NgModule({
+// 	imports: [PurchaseRequestionViewRoutingModule, SharedModule, ActionBtnModule, AgGridModule.withComponents([ActionCellRendererComponent])],
+// 	declarations: [PurchaseRequestionViewComponent],
+// 	entryComponents: [],
+// 	providers: [],
+// })
+// export class PurchaseRequestionViewModule {}
